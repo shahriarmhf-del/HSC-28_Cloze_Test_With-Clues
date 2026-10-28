@@ -1,0 +1,6 @@
+{
+  "name": "HSC Cloze Lab",
+  "description": "Interactive English cloze test practice with clues, Bangla translations, board exam questions, and progress tracking.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
