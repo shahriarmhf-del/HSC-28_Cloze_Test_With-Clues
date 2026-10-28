@@ -173,15 +173,19 @@ export const JsonImportModal: React.FC<JsonImportModalProps> = ({
 
     try {
       if (saveToServer) {
-        // Send to server to write permanently in custom_questions.json
-        const res = await fetch('/api/questions/import', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(parsedSets),
-        });
-        const data = await res.json();
-        if (!res.ok) {
-          throw new Error(data.error || 'Failed to save to server.');
+        // Attempt to persist to server (works when running with Node backend)
+        try {
+          const res = await fetch('/api/questions/import', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(parsedSets),
+          });
+          if (!res.ok) {
+            console.warn('Server storage returned status', res.status);
+          }
+        } catch (serverErr) {
+          // Normal on static platforms like GitHub Pages
+          console.info('Server storage unavailable on static hosting, saving locally to browser storage.');
         }
       }
 

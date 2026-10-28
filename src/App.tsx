@@ -97,9 +97,9 @@ export default function App() {
 
     // Fetch server-stored questions for permanent cross-device access
     fetch('/api/questions')
-      .then((res) => res.json())
+      .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
-        if (data.customQuestions && data.customQuestions.length > 0) {
+        if (data && data.customQuestions && data.customQuestions.length > 0) {
           const hidden = getHiddenQuestionIds();
           setQuestions((prev) => {
             const map = new Map(prev.map((q) => [q.id, q]));
